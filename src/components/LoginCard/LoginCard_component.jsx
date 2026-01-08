@@ -1,23 +1,45 @@
+import { UserContext } from "../../context/contex";
+import { logInUser } from "../../firebase/auth.jsx";
+
 function LoginCard_component() {
-  function onLogin(e) {
+  const { setIsLoginPage, setUser } = UserContext();
+  async function onSubmit(e) {
     e.preventDefault();
-    // ! Todo login the use
-    // const email = String(e.target[0].value);
-    // const password = String(e.target[1].value);
+    const targetValueArr = Array.from(e.target);
+    targetValueArr.pop();
+    const valuesArray = [];
+    targetValueArr.forEach((element) => {
+      valuesArray.push(element.value);
+    });
+    console.log(valuesArray);
+    if (valuesArray.some((e) => e.trim() === "")) {
+      alert("All fields must be filled!");
+      return undefined;
+    }
+
+    const email = String(valuesArray[0]);
+    const password = String(valuesArray[1]);
+    console.log(email, password);
+    const user = logInUser(email, password);
+    user
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.log("Error Login User:: ", error);
+      });
   }
   return (
     <>
       {/* Card */}
-      <div className="w-full max-w-md p-8 rounded-2xl shadow-lg bg-white  shadow-gray-900 dark:bg-gray-800">
+      <div className="w-full max-w-md p-8 rounded-2xl outline shadow-black   dark:shadow-md dark:outline-0 outline-gray-200 shadow-sm bg-zinc-100 dark:bg-gray-800">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            Login
-          </h1>
-        </div>
+        <h1 className=" text-4xl  whitespace-nowrap text-center font-bold text-gray-800 dark:text-white mb-6">
+          Login
+        </h1>
 
         {/* Form */}
-        <form className="space-y-4" onSubmit={(e) => onLogin(e)}>
+        <form className="space-y-4" onSubmit={(e) => onSubmit(e)}>
           <div>
             <label className="block text-sm text-gray-600 dark:text-gray-300">
               Email
@@ -51,7 +73,14 @@ function LoginCard_component() {
         {/* Footer */}
         <p className="text-sm text-center mt-4 text-gray-500 dark:text-gray-400">
           Don’t have an account?{" "}
-          <span className="text-blue-500 cursor-pointer">Sign up</span>
+          <span
+            onClick={() => {
+              setIsLoginPage((prev) => !prev);
+            }}
+            className="text-blue-500 cursor-pointer"
+          >
+            Sign up
+          </span>
         </p>
       </div>
     </>

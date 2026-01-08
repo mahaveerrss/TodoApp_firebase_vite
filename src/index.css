@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer components {
+  .sideNavbarButton {
+    @apply transition-all dark:text-white text-black font-semibold sm:!text-[1rem]  !text-[0.65rem] !rounded-none  w-full hover:bg-blue-700   focus:outline-white focus:outline-2 focus:bg-blue-700;
+  }
+}
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -37,30 +48,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 #root {
   height: 100vh;
   width: 100vw;

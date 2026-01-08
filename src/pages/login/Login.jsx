@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react";
+ 
 import LoginCard_component from "../../components/LoginCard/LoginCard_component";
-import Navbar_component from "../../components/Navbar/Navbar_component";
+ 
 
 export default function Login() {
-  const [darkMode, setDarkMode] = useState(true);
-
-  // apply dark mode class to html
-  useEffect(() => {
-    const root = window.document.documentElement;
-
-    if (darkMode) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [darkMode]);
-
+ 
   return (
-    <div className="min-h-screen flex items-center flex-col gap-32   bg-gray-100 dark:bg-gray-900 transition-colors">
-      <Navbar_component props={{ darkMode, setDarkMode }} />
-      <LoginCard_component props={{ darkMode, setDarkMode }} />
+    <div className="    flex items-center  justify-center  bg-gray-100 dark:bg-gray-900 transition-colors">
+      
+      <LoginCard_component/>
     </div>
   );
 }
